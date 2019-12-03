@@ -14,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import ru.job4j.todolist.model.Store;
 import ru.job4j.todolist.model.Task;
 import ru.job4j.todolist.model.TaskStore;
@@ -26,13 +28,15 @@ public class MainActivity extends AppCompatActivity {
     TaskRecyclerAdapter taskRecyclerAdapter;
 
     FloatingActionButton fab;
-    Store tasks = new TaskStore();
+
+    @Inject
+    Store tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        App.getStore().injectTo(this);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
