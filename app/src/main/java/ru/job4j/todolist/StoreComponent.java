@@ -1,5 +1,7 @@
 package ru.job4j.todolist;
 
+import android.content.ContentProvider;
+
 import javax.inject.Singleton;
 
 import dagger.Component;

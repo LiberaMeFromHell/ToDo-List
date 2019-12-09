@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".App">
+        <provider
+            android:authorities="ru.job4j.todo"
+            android:name=".model.StoreContentProvider"/>
         <activity
             android:name=".DetailActivity"
             android:theme="@style/Theme_Dialog"/>

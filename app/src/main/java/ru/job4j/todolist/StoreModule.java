@@ -7,7 +7,6 @@ import dagger.Provides;
 import ru.job4j.todolist.model.Store;
 import ru.job4j.todolist.model.TaskStore;
 
-
 @Module
 public class StoreModule {
     @Singleton
