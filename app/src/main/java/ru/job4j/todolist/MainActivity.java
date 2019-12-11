@@ -19,7 +19,6 @@ import javax.inject.Inject;
 
 import ru.job4j.todolist.model.IStore;
 import ru.job4j.todolist.model.Task;
-import ru.job4j.todolist.model.database.SqlStore;
 import ru.job4j.todolist.model.database.TaskDBSchema;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         App.getStore().injectTo(this);
-        //sqlStore = new SqlStore(this);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

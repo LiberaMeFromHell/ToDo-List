@@ -3,16 +3,19 @@ package ru.job4j.todolist;
 import android.app.Application;
 import android.content.Context;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class App extends Application {
 
-    private static Context context;
+    private Context context;
     private static StoreComponent component;
 
     @Provides
+    @Singleton
     public Context provideAppContext() {
         return context;
     }
@@ -20,7 +23,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        App.context = getApplicationContext();
+        context = getApplicationContext();
         component = DaggerStoreComponent.create();
     }
 
