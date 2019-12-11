@@ -1,5 +1,6 @@
 package ru.job4j.todolist;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,27 +17,32 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import ru.job4j.todolist.model.Store;
+import ru.job4j.todolist.model.IStore;
 import ru.job4j.todolist.model.Task;
-import ru.job4j.todolist.model.TaskStore;
+import ru.job4j.todolist.model.database.SqlStore;
+import ru.job4j.todolist.model.database.TaskDBSchema;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int EDIT_TASK = 123;
     public static final int NEW_TASK = 124;
 
-    TaskRecyclerAdapter taskRecyclerAdapter;
+    private TaskRecyclerAdapter taskRecyclerAdapter;
 
-    FloatingActionButton fab;
+    private FloatingActionButton fab;
 
     @Inject
-    Store tasks;
+    IStore tasks;
+
+    @Inject
+    IStore sqlStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         App.getStore().injectTo(this);
+        //sqlStore = new SqlStore(this);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskRecyclerAdapter = new TaskRecyclerAdapter(tasks.getTasks(), this);
+        taskRecyclerAdapter = new TaskRecyclerAdapter(this, sqlStore);
         recyclerView.setAdapter(taskRecyclerAdapter);
     }
 
@@ -63,22 +69,22 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
 
             case (EDIT_TASK):
-                int position = data.getIntExtra("position", 0);
+                int id = data.getIntExtra("id", 0);
                 String strName = data.getStringExtra("editedName");
                 String strDesc = data.getStringExtra("editDesc");
-                taskRecyclerAdapter.getTasks().get(position).setName(strName);
-                taskRecyclerAdapter.getTasks().get(position).setDesc(strDesc);
+
+                sqlStore.editTask(new Task(id, strName, strDesc, null));
                 taskRecyclerAdapter.notifyDataSetChanged();
                 break;
 
-            case(NEW_TASK):
-                Task task = new Task(
-                        data.getStringExtra("editedName"),
-                        data.getStringExtra("editDesc"),
-                        new Date());
-                taskRecyclerAdapter.addTask(task);
+            case (NEW_TASK):
+                ContentValues value = new ContentValues();
+                value.put(TaskDBSchema.TaskTable.Cols.NAME, data.getStringExtra("editedName"));
+                value.put(TaskDBSchema.TaskTable.Cols.DESC, data.getStringExtra("editDesc"));
+                value.put(TaskDBSchema.TaskTable.Cols.CREATED, (new Date()).getTime());
+
+                sqlStore.addTask(TaskDBSchema.TaskTable.TITLE, null, value);
                 taskRecyclerAdapter.notifyDataSetChanged();
         }
     }
 }
-

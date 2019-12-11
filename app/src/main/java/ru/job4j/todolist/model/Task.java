@@ -7,8 +7,16 @@ public class Task {
     private String desc;
     private Date created;
     private boolean closed = false;
+    private int id;
 
     public Task(String name, String desc, Date created) {
+        this.name = name;
+        this.desc = desc;
+        this.created = created;
+    }
+
+    public Task(int id, String name, String desc, Date created) {
+        this.id = id;
         this.name = name;
         this.desc = desc;
         this.created = created;
@@ -46,6 +54,14 @@ public class Task {
         this.created = created;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,17 +70,21 @@ public class Task {
         Task task = (Task) o;
 
         if (isClosed() != task.isClosed()) return false;
-        if (!getName().equals(task.getName())) return false;
-        if (!getDesc().equals(task.getDesc())) return false;
-        return getCreated().equals(task.getCreated());
+        if (getId() != task.getId()) return false;
+        if (getName() != null ? !getName().equals(task.getName()) : task.getName() != null)
+            return false;
+        if (getDesc() != null ? !getDesc().equals(task.getDesc()) : task.getDesc() != null)
+            return false;
+        return getCreated() != null ? getCreated().equals(task.getCreated()) : task.getCreated() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getName().hashCode();
-        result = 31 * result + getDesc().hashCode();
-        result = 31 * result + getCreated().hashCode();
+        int result = getName() != null ? getName().hashCode() : 0;
+        result = 31 * result + (getDesc() != null ? getDesc().hashCode() : 0);
+        result = 31 * result + (getCreated() != null ? getCreated().hashCode() : 0);
         result = 31 * result + (isClosed() ? 1 : 0);
+        result = 31 * result + getId();
         return result;
     }
 }

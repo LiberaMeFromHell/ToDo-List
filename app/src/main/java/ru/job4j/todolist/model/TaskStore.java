@@ -1,10 +1,12 @@
 package ru.job4j.todolist.model;
 
+import android.content.ContentValues;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaskStore implements Store {
+public class TaskStore implements IStore {
 
     private List<Task> tasks = new ArrayList();
 
@@ -21,12 +23,17 @@ public class TaskStore implements Store {
     }
 
     @Override
-    public void addTask(Task task) {
-        tasks.add(task);
+    public void addTask(String table, String columnHack, ContentValues value) {
+
     }
 
     @Override
     public void removeTask(Task task) {
         tasks.remove(task);
+    }
+
+    @Override
+    public void editTask(Task task) {
+
     }
 }

@@ -1,12 +1,10 @@
 package ru.job4j.todolist;
 
-import android.content.ContentProvider;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
 
-@Component(modules = StoreModule.class)
+@Component(modules = {StoreModule.class,App.class})
 
 @Singleton
 public interface StoreComponent {

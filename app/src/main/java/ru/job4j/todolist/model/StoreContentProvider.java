@@ -12,7 +12,7 @@ public class StoreContentProvider extends ContentProvider {
 
     public static final Uri CONTENT_URI = Uri.parse("content://ru.job4j.todo/items");
 
-    Store store = new TaskStore();
+    IStore store = new TaskStore();
 
     @Override
     public boolean onCreate() {

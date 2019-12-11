@@ -4,10 +4,10 @@ import android.database.AbstractCursor;
 
 public class StoreCursor extends AbstractCursor {
 
-    private final Store store;
+    private final IStore store;
     private final String selection;
 
-    public StoreCursor(Store store, String selection) {
+    public StoreCursor(IStore store, String selection) {
         this.store = store;
         this.selection = selection;
     }
