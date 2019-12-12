@@ -11,7 +11,7 @@ import dagger.Provides;
 @Module
 public class App extends Application {
 
-    private Context context;
+    private static Context context;
     private static StoreComponent component;
 
     @Provides
