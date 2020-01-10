@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-@Component(modules = {StoreModule.class,App.class})
+@Component(modules = {StoreModule.class,App.class,FileStoreModule.class})
 
 @Singleton
 public interface StoreComponent {

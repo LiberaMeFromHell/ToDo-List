@@ -11,12 +11,6 @@ import ru.job4j.todolist.model.database.SqlStore;
 
 @Module
 public class StoreModule {
-/*    @Singleton
-    @Provides
-    public IStore providesStore() {
-        return new TaskStore();
-    }*/
-
     @Singleton
     @Provides
     public IStore providesSQLStore(Context context) {

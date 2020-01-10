@@ -15,19 +15,11 @@ import ru.job4j.todolist.model.Task;
 
 public class TaskFileStore implements FileStore {
 
-    private static FileStore instance;
     private int counter = 0;
     private Context context;
 
-    private TaskFileStore(Context context) {
+    public TaskFileStore(Context context) {
         this.context = context;
-    }
-
-    public static FileStore getInstance(Context context) {
-        if (instance == null) {
-            instance = new TaskFileStore(context);
-        }
-        return instance;
     }
 
     @Override
